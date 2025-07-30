@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma flor pra outra flor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color:white; /* Fundo romântico */
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Estilo do emoji */
+        .emoji {
+            width: 500px; /* Tamanho grande */
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1; /* Garante que o emoji fique acima dos corações */
+        }
+
+        /* Imagem do emoji */
+        .emoji img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Garante que a imagem não fique distorcida */
+        }
+
+        /* Estilo dos corações */
+        .heart {
+            position: absolute;
+            top: -50px;
+            color: #ff6f61; /* Cor dos corações */
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        /* Animação dos corações */
+        @keyframes fall {
+            0% {
+                transform: translateY(-50px);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji">
+        <img src="{{ url_for('static', filename='img/DogAmor.gif') }}">
+    </div>
+
+    <!-- Tag de áudio para a música de fundo -->
+    <audio id="background-music" autoplay loop>
+        <source src="{{ url_for('static', filename='audio/musicasite.mp3') }}" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <!-- Botão para controlar a música (opcional) -->
+    <button id="music-button" style="position: absolute; top: 20px; right: 20px; z-index: 2; padding: 10px; background-color: #ff6f61; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Pausar Música
+    </button>
+
+    <!-- Corações no fundo -->
+    <script>
+        // Função para criar corações
+        function createHearts() {
+            const container = document.body;
+
+            // Cria 50 corações
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️'; // Emoji de coração
+                heart.style.left = Math.random() * 100 + 'vw'; // Posição horizontal aleatória
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // Velocidade aleatória
+                container.appendChild(heart);
+            }
+        }
+
+        // Cria os corações quando a página carrega
+        createHearts();
+
+        // Controle da música
+        const music = document.getElementById('background-music');
+        const button = document.getElementById('music-button');
+
+        button.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                button.textContent = 'Pausar Música';
+            } else {
+                music.pause();
+                button.textContent = 'Tocar Música';
+            }
+        });
+    </script>
+</body>
+</html>
