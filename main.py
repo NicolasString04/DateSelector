@@ -12,7 +12,7 @@ db = firestore.client()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('date.html')
 
 @app.route('/salvar_encontro', methods=['POST'])
 def salvar_encontro():
@@ -20,9 +20,6 @@ def salvar_encontro():
     data = request.form.get('data')
     hora = request.form.get('hora')
 
-    print(f'POST recebido - Local: {local}, Data: {data}, Hora: {hora}')
-
-    # Salva no Firestore
     doc_ref = db.collection('encontros').document()
     doc_ref.set({
         'local': local,
